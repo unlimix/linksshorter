@@ -1,11 +1,14 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+
+/**
+ * @var CreateLinkForm $model
+ * @var View $this
+ */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-/* @var $this yii\web\View */
+use yii\web\View;
+use app\forms\CreateLinkForm;
 
 $this->title = 'Create Link';
 ?>

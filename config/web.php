@@ -1,5 +1,8 @@
 <?php
 
+use app\components\Browser;
+use app\components\IpGeoBase;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -10,9 +13,15 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
+        'browser' => [
+            'class' => Browser::class,
+        ],
+        'IpGeoBase' => [
+            'class' => IpGeoBase::class,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Jr_YWYgbWfzJE4h69ULOIFZB8JpdFzbh',
@@ -51,10 +60,6 @@ $config = [
                 '' => 'site/index',
                 '/<hash:\S{5}>' => 'redirect/index',
                 '/<hash>+' => 'statistic/index',
-//                'compare' => 'compare/index',
-//                'blog/<id:\d+>' => 'blog/view',
-//                'blog' => 'blog/index',
-//                'yml' => 'yml/index',
             ],
         ],
     ],

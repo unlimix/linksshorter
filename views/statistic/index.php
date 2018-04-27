@@ -1,30 +1,40 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
-/* @var $this yii\web\View */
+
+/**
+ * @var Links $link
+ * @var Statistic $model
+ * @var ActiveDataProvider $dataProvider
+ * @var View $this
+ */
+
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
+use app\models\Links;
 use app\models\Statistic;
-use yii\helpers\Html;
+use yii\web\View;
+
 $this->title = '';
 ?>
 <div class="site-index">
 
-    <div>
-        <?= $link->create_at ?>
-    </div>
-    <div>
-        <a href="<?= $link->link ?>"><?= $link->link ?></a>
-    </div>
-    <div>
-        <a href="<?= $link->short_link ?>"><?= $link->short_link ?></a>
-    </div>
-    <div>
-        <a href="<?= $link->short_link ?>+"><?= $link->short_link ?>+</a>
-    </div>
     <div class="box-header with-border">
-        <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
+        <div>
+            <?php $datetime = new \DateTime($link->create_at); ?>
+            CREATED <?= $datetime->format('d.m.Y, H:i:s') ?>
+        </div>
+        <div>
+            <a target="_blank" href="<?= $link->link ?>"><?= $link->link ?></a>
+        </div>
+        <div>
+            <a target="_blank" href="http://<?= $_SERVER['HTTP_HOST']; ?>/<?= $link->short_link ?>">
+                http://<?= $_SERVER['HTTP_HOST']; ?>/<?= $link->short_link ?>
+            </a>
+        </div>
+        <div>
+            <a target="_blank" href="http://<?= $_SERVER['HTTP_HOST']; ?>/<?= $link->short_link ?>+">
+                http://<?= $_SERVER['HTTP_HOST']; ?>/<?= $link->short_link ?>+
+            </a>
+        </div>
     </div>
     <div class="box-body table-responsive">
         <?= GridView::widget([
@@ -39,7 +49,8 @@ $this->title = '';
                 [
                     'attribute' => 'datetime',
                     'content' => function (Statistic $model) {
-                        return Yii::$app->formatter->asDate($model->datetime, 'dd.MM.Y');
+                        $datetime = new \DateTime();
+                        return $datetime->format('d.m.Y, H:i:s');
                     }
                 ],
                 'ip',

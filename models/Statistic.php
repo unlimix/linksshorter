@@ -49,11 +49,11 @@ class Statistic extends ActiveRecord
         return [
             'id' => 'ID',
             'link_id' => 'Link ID',
-            'ip' => 'Ip',
-            'region' => 'Region',
-            'browser' => 'Browser',
-            'os' => 'Os',
-            'datetime' => 'Os',
+            'ip' => 'IP address',
+            'region' => 'Region (country)',
+            'browser' => 'Browser and version',
+            'os' => 'OS',
+            'datetime' => 'Date of each use',
         ];
     }
 }
