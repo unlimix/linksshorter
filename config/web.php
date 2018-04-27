@@ -48,6 +48,13 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '' => 'site/index',
+                '/<hash:\S{5}>' => 'redirect/index',
+                '/<hash>+' => 'statistic/index',
+//                'compare' => 'compare/index',
+//                'blog/<id:\d+>' => 'blog/view',
+//                'blog' => 'blog/index',
+//                'yml' => 'yml/index',
             ],
         ],
     ],

@@ -33,7 +33,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'create' => ['post'],
                 ],
             ],
         ];
@@ -64,6 +64,19 @@ class SiteController extends Controller
     {
         $model = new CreateLinkForm();
 
+        return $this->render('index', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionCreate()
+    {
+        $model = new CreateLinkForm();
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+            Yii::$app->session->setFlash('contactFormSubmitted');
+
+            return $this->refresh();
+        }
         return $this->render('index', [
             'model' => $model,
         ]);
