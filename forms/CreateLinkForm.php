@@ -2,16 +2,13 @@
 
 namespace app\forms;
 
-//use Yii;
 use yii\base\Model;
+use app\models\Links;
 
 class CreateLinkForm extends Model
 {
     public $link;
-    public $email;
-    public $subject;
-    public $body;
-    public $verifyCode;
+    private $shortLink;
 
 
     /**
@@ -24,34 +21,35 @@ class CreateLinkForm extends Model
             ['link', 'string'],
         ];
     }
-//
-//    /**
-//     * @return array customized attribute labels
-//     */
-//    public function attributeLabels()
-//    {
-//        return [
-//            'link' => 'Verification Code',
-//        ];
-//    }
-//
-//    /**
-//     * Sends an email to the specified email address using the information collected by this model.
-//     * @param string $email the target email address
-//     * @return bool whether the model passes validation
-//     */
-//    public function contact($email)
-//    {
-//        if ($this->validate()) {
-//            Yii::$app->mailer->compose()
-//                ->setTo($email)
-//                ->setFrom([$this->email => $this->name])
-//                ->setSubject($this->subject)
-//                ->setTextBody($this->body)
-//                ->send();
-//
-//            return true;
-//        }
-//        return false;
-//    }
+
+    /**
+     * @return boolean
+     */
+    public function create()
+    {
+        if ($this->validate()) {
+            $datetime = new \DateTime();
+
+            $model = new Links([
+                'create_at' => $datetime->format('Y-m-d H:i:s'),
+                'link' => $this->link,
+                'short_link' => $this->shortLink,
+            ]);
+
+            return $model->save();
+        }
+        return false;
+    }
+
+    public function getShortLink()
+    {
+        $this->createShortLink();
+        return $this->shortLink;
+    }
+
+    private function createShortLink()
+    {
+        $this->shortLink = substr(md5($this->link . time()), 0, 5);
+
+    }
 }

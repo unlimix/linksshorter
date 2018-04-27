@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\forms\CreateLinkForm;
+use yii\helpers\Url;
 
 class SiteController extends Controller
 {
@@ -64,19 +65,13 @@ class SiteController extends Controller
     {
         $model = new CreateLinkForm();
 
-        return $this->render('index', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionCreate()
-    {
-        $model = new CreateLinkForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
+        if ($model->load(Yii::$app->request->post())) {
+            $hash = $model->getShortLink();
+                if ($model->create($hash)) {
+                    return $this->redirect(Url::to(['statistic/index', 'hash' => $hash]), 302);
+                }
         }
+
         return $this->render('index', [
             'model' => $model,
         ]);
